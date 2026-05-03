@@ -155,7 +155,7 @@ export async function editUser(prevState: any, formData: FormData) {
   return { success: true };
 }
 
-export async function removeAllUsers(prevState: any, formData: FormData) {
+export async function removeAllUsers(prevState: any, formData: FormData): Promise<{ success?: boolean; error?: string }> {
   await requireAdmin();
   
   const db = getFirebaseAdmin();
@@ -183,7 +183,7 @@ export async function removeAllUsers(prevState: any, formData: FormData) {
   return { success: true };
 }
 
-export async function resetAllVotes(prevState: any, formData: FormData) {
+export async function resetAllVotes(prevState: any, formData: FormData): Promise<{ success?: boolean; error?: string }> {
   await requireAdmin();
   
   const db = getFirebaseAdmin();
@@ -214,7 +214,7 @@ export async function resetAllVotes(prevState: any, formData: FormData) {
   return { success: true };
 }
 
-export async function simulateRandomVotes(prevState: any, formData: FormData) {
+export async function simulateRandomVotes(prevState: any, formData: FormData): Promise<{ success?: boolean; error?: string }> {
   await requireAdmin();
   
   const db = getFirebaseAdmin();
