@@ -27,9 +27,7 @@ export default function AdminLogin() {
           </div>
         )}
         
-        <p style={{ color: '#94a3b8', fontSize: '0.9rem', marginBottom: '0.5rem' }}>
-          Initial password for first setup is <strong>admin123</strong>.
-        </p>
+
 
         <div>
           <label htmlFor="password" style={{ display: 'block', marginBottom: '0.5rem', color: '#cbd5e1', fontSize: '0.9rem' }}>Admin Password</label>
