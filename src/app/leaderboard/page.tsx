@@ -26,11 +26,14 @@ export default async function LeaderboardPage() {
   users.forEach(u => {
     if (u.has_voted && u.voted_for) {
       if (Array.isArray(u.voted_for)) {
-        u.voted_for.forEach((id: string) => {
-          if (voteCounts[id] !== undefined) voteCounts[id]++;
+        u.voted_for.forEach((id: string, index: number) => {
+          if (voteCounts[id] !== undefined) {
+            const points = index === 0 ? 3 : index === 1 ? 2 : index === 2 ? 1 : 0;
+            voteCounts[id] += points;
+          }
         });
       } else if (typeof u.voted_for === 'string') {
-        if (voteCounts[u.voted_for] !== undefined) voteCounts[u.voted_for]++;
+        if (voteCounts[u.voted_for] !== undefined) voteCounts[u.voted_for] += 3;
       }
     }
   });

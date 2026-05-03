@@ -21,7 +21,7 @@ export async function castVote(prevState: any, formData: FormData) {
     return { error: 'Invalid selection format' };
   }
 
-  if (!Array.isArray(nomineeIds) || nomineeIds.length === 0) {
+  if (!Array.isArray(nomineeIds) || nomineeIds.filter(id => id).length === 0) {
     return { error: 'Please select at least 1 classmate' };
   }
   if (nomineeIds.length > 3) {
@@ -45,6 +45,7 @@ export async function castVote(prevState: any, formData: FormData) {
       
       // Verify all nominees exist
       for (const id of nomineeIds) {
+        if (!id) continue;
         const nomineeRef = db.collection('users').doc(id);
         const nomineeDoc = await t.get(nomineeRef);
         if (!nomineeDoc.exists) {

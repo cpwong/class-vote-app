@@ -36,11 +36,15 @@ export default async function VotePage() {
     }))
     .filter(user => user.id !== session.userId);
 
+  const studentName = userData?.fullname || userData?.username || session.username;
+
   return (
     <div style={{ padding: '2rem', width: '100%', maxWidth: '1200px', margin: '0 auto', textAlign: 'center' }}>
-      <h1 className="title" style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}>Nominate a Classmate</h1>
+      <h1 className="title" style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}>Hello, {studentName}</h1>
+      <h2 style={{ fontSize: '1.5rem', marginBottom: '1rem', fontWeight: 500 }}>Nominate Classmates</h2>
       <p style={{ color: '#94a3b8', marginBottom: '2rem' }}>
-        Select up to 3 classmates who have been the most helpful to you. You can change your votes at any time.
+        Nominate up to 3 classmates in order of ranking. Rank 1 = 3 points, Rank 2 = 2 points, Rank 3 = 1 point.<br/>
+        Only Rank 1 is required. You can change your votes at any time.
       </p>
       
       <VoteClient classmates={classmates} currentUserId={session.userId} initialVotes={initialVotes} />
