@@ -35,19 +35,36 @@ async function simulateStudent(browser, username) {
     await page.waitForURL(`${TARGET_URL}/vote`);
     console.log(`[${username}] Logged in successfully!`);
 
-    // Wait for the voting cards to load
-    await page.waitForSelector('form .glass');
+    // Wait for the select triggers to load
+    await page.waitForSelector('.select-trigger');
     
-    // Get all the classmate voting buttons
-    const classmateButtons = await page.$$('form .glass');
-    
-    // Randomly select 3 classmates
-    const shuffled = classmateButtons.sort(() => 0.5 - Math.random());
-    const selected = shuffled.slice(0, 3);
+    // Get all the select triggers (Rank 1, Rank 2, Rank 3)
+    const triggers = await page.$$('.select-trigger');
 
     console.log(`[${username}] Clicking votes...`);
-    for (const btn of selected) {
-      await btn.click();
+    for (let i = 0; i < Math.min(3, triggers.length); i++) {
+      // Open the dropdown
+      await triggers[i].click();
+      await page.waitForTimeout(300); // Wait for dropdown animation
+
+      // Find all options in the open dropdown (excluding the empty option)
+      const availableOptions = await page.$$('.select-option:not(.empty-option)');
+      
+      // Filter out disabled ones (those with a disabled badge)
+      const clickableOptions = [];
+      for (const opt of availableOptions) {
+        const hasDisabledBadge = await opt.$('.disabled-badge');
+        if (!hasDisabledBadge) {
+          clickableOptions.push(opt);
+        }
+      }
+
+      if (clickableOptions.length > 0) {
+        // Randomly select one valid option
+        const randomOpt = clickableOptions[Math.floor(Math.random() * clickableOptions.length)];
+        await randomOpt.click();
+      }
+
       await page.waitForTimeout(200); // Simulate tiny human delay
     }
 
