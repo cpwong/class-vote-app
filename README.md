@@ -38,23 +38,51 @@ A beautiful, responsive, and real-time voting application built with **Next.js**
 
 ## 💻 Usage Instructions: Developers & Testing
 
+### Pre-requisites
+
+Before setting up the server locally, ensure you have the following credentials ready for your `.env.local` file (refer to `.env.local.example`):
+- **Firebase Admin SDK Service Account**: 
+  - `FIREBASE_PROJECT_ID`
+  - `FIREBASE_CLIENT_EMAIL`
+  - `FIREBASE_PRIVATE_KEY`
+- **Firebase Client-Side Configuration**:
+  - `NEXT_PUBLIC_FIREBASE_API_KEY`
+  - `NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN`
+  - `NEXT_PUBLIC_FIREBASE_PROJECT_ID`
+  - `NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET`
+  - `NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID`
+  - `NEXT_PUBLIC_FIREBASE_APP_ID`
+- **Application Secrets**:
+  - `SESSION_SECRET` (A strong random string for session/cookie signing)
+
 ### Local Setup
 
 1. Clone the repository and install dependencies:
    ```bash
    npm install
    ```
-2. Create a `.env.local` file in the root directory and configure your Firebase Admin SDK credentials:
+2. **Firebase Setup**:
+   - Go to the [Firebase Console](https://console.firebase.google.com/) and create a new project.
+   - Navigate to **Firestore Database** and create a new database in test mode or with appropriate security rules.
+   - Go to **Project Settings > Service accounts** and click **Generate new private key**. This will download a JSON file containing your credentials.
+3. Create a `.env.local` file in the root directory and configure your Firebase Admin SDK credentials using the downloaded JSON file:
    ```env
    FIREBASE_PROJECT_ID="your-project-id"
    FIREBASE_CLIENT_EMAIL="your-service-account-email"
    FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n"
    SESSION_SECRET="your-super-secret-key"
    ```
-3. Start the Next.js development server:
+4. Start the Next.js development server:
    ```bash
    npm run dev
    ```
+
+### Simple Randomized Test
+
+If you want to quickly populate the database with random votes to test the Leaderboard UI without running the full E2E script:
+1. Log in to the **Admin Dashboard**.
+2. Click the **Simulate Votes** button. This will instantly generate and submit randomized votes on behalf of your existing cohort.
+3. Open the **Projector Leaderboard** to view the randomly generated results.
 
 ### End-to-End Concurrency Testing
 
